@@ -1,10 +1,11 @@
 from fastapi import FastAPI
-from routers import book_controller, user_controller
 import os
 from uvicorn.config import LOGGING_CONFIG
 import uvicorn
-import dotenv
-dotenv.load_dotenv(dotenv.find_dotenv())
+from sqlalchemy.orm import session
+
+from routers import book_controller, user_controller
+from database import engine, SessionLocal
 def create_app(): 
     app = FastAPI()
     app.include_router(book_controller.router)
