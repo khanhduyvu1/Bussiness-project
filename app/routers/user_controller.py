@@ -1,4 +1,4 @@
-from fastapi import APIRouter
+from fastapi import APIRouter, HTTPException
 from fastapi import Depends
 from sqlalchemy.ext.asyncio import AsyncSession
 import bcrypt
@@ -8,7 +8,7 @@ from models.user import UserCreate, UserDisplay
 from models.models_controller import User
 from database import SessionLocal
 
-router = APIRouter()
+router = APIRouter(tags=['User'])
 
 def get_db():
     db = SessionLocal()
@@ -19,9 +19,20 @@ def get_db():
         
 @router.post("/users/", response_model=UserDisplay)
 async def create_user(user: UserCreate, db: Session = Depends(get_db)):
-    hashed_password = bcrypt.hashpw(user.password.encode('utf-8'), bcrypt.gensalt())
-    db_user = User(username=user.username, hashed_password=hashed_password.decode('utf-8'))
-    db.add(db_user)
-    db.commit()
-    db.refresh(db_user)
-    return db_user
+    #hashed_password = bcrypt.hashpw(user.password.encode('utf-8'), bcrypt.gensalt())
+    try:
+        db_user = User(username=user.username, password=user.password)
+        db.add(db_user)
+        db.commit()
+        db.refresh(db_user)
+        return db_user
+    except Exception as e:
+        db.rollback()
+        db.close()
+        raise HTTPException(status_code=400, detail=str(e))
+@router.get("/users/")
+async def user_info(user_id: int, db: Session = Depends(get_db)):
+    results = db.query(User).filter(User.id == user_id).first()
+    if not results:
+        raise HTTPException(status_code=404, detail="User not found")
+    return results

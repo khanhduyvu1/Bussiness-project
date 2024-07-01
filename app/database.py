@@ -5,7 +5,7 @@ import os
 
 
 # engine = create_engine(os.getenv("SQLALCHEMY_DATABASE_URL"))
-engine = create_engine("postgresql://postgres:postgres@localhost:5432/Book")
+engine = create_engine("postgresql://postgres:postgres@localhost:5432/Book", pool_size=3000, max_overflow=2000)
 SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
 
 Base = declarative_base()

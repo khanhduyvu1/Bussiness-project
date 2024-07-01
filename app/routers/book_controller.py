@@ -5,7 +5,7 @@ from sqlalchemy.orm import Session
 from models.book import BookCreate
 from models.models_controller import Book
 
-router = APIRouter()
+router = APIRouter(tags=['Book'])
 
 def get_db():
     db = SessionLocal()
@@ -25,7 +25,7 @@ async def create_book(book: BookCreate, db: Session = Depends(get_db)):
 
 @router.get("/books/")
 async def read_books(book_id: int, db: Session = Depends(get_db)):
-    results = db.query(Book).filter(Book.id == book_id)
+    results = db.query(Book).filter(Book.id == book_id).first()
     if not results:
         raise HTTPException(status_code=404, detail="Book not found")
     return results
