@@ -1,6 +1,7 @@
 from pydantic import BaseModel
+from model_base import BareBaseModel
 
-class BookCreate(BaseModel):
+class BookCreate(BareBaseModel):
     title: str
     author: str
     description: str
