@@ -1,17 +1,15 @@
 from sqlalchemy import Column, Integer, String, ForeignKey, Boolean, Float
-from sqlalchemy.ext.declarative import declarative_base
 
-from models.model_base import BareBaseModel
+from database import Base
 
-
-class User(BareBaseModel):
+class User(Base):
     __tablename__ = "users"
     id = Column(Integer, primary_key=True, index=True)
     username = Column(String, unique=True, index=True)
     hashed_password = Column(String)
     is_active = Column(Boolean, default=True)
 
-class Book(BareBaseModel):
+class Book(Base):
     __tablename__ = "books"
     id = Column(Integer, primary_key=True, index=True)
     title = Column(String, index=True)
