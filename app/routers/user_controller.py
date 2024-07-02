@@ -4,9 +4,8 @@ from sqlalchemy.ext.asyncio import AsyncSession
 import bcrypt
 from sqlalchemy.orm import Session
 
-from models.user import UserCreate, UserDisplay
-from models.models_controller import User
-from database import SessionLocal
+from models.user import UserCreate, UserDisplay, User
+from schemas.database import SessionLocal
 
 router = APIRouter(tags=['User'])
 

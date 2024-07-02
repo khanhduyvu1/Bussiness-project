@@ -1,9 +1,9 @@
 from fastapi import APIRouter, Depends, HTTPException
-from database import SessionLocal
+from schemas.database import SessionLocal
 from sqlalchemy.orm import Session
 
-from models.book import BookCreate
-from models.models_controller import Book
+from models.book import BookCreate, Book
+
 
 router = APIRouter(tags=['Book'])
 
@@ -15,7 +15,7 @@ def get_db():
         db.close()
 
 
-@router.post("/books/")
+@router.post("/books/", response_model=BookCreate)
 async def create_book(book: BookCreate, db: Session = Depends(get_db)):
     db_book = Book(**book.model_dump())
     db.add(db_book)
@@ -23,7 +23,7 @@ async def create_book(book: BookCreate, db: Session = Depends(get_db)):
     db.refresh(db_book)
     return db_book
 
-@router.get("/books/")
+@router.get("/books/", response_model=BookCreate)
 async def read_books(book_id: int, db: Session = Depends(get_db)):
     results = db.query(Book).filter(Book.id == book_id).first()
     if not results:
