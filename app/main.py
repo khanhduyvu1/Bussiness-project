@@ -3,10 +3,9 @@ import dotenv
 dotenv.load_dotenv(dotenv.find_dotenv())
 
 from fastapi import FastAPI, Depends
-from typing import Annotated
 import uvicorn
-from sqlalchemy.orm import Session
 from uvicorn.config import LOGGING_CONFIG
+
 
 from routers import book_controller, user_controller
 

@@ -10,6 +10,7 @@ class User(Base):
     id = Column(Integer, primary_key=True, autoincrement=True)
     username = Column(String, unique=True, index=True)
     password = Column(String)
+    hashed_password = Column(String)
     is_active = Column(Boolean, default=True)
     created_date_time = Column(DateTime, default=datetime.now, nullable=False)
     last_updated_date_time = Column(
@@ -19,8 +20,13 @@ class User(Base):
 class UserCreate(BaseModel):
     username: str
     password: str
-
-class UserDisplay(BaseModel):
+    
+class UserDTO(BaseModel):
     id: int
     username: str
-    is_active: bool
+    password: str
+    
+
+class Token(BaseModel):
+    access_token : str
+    token_type: str
