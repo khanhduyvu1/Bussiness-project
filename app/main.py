@@ -13,8 +13,9 @@ from routers import book_controller, user_controller
 
 def create_app(): 
     app = FastAPI()
-    app.include_router(book_controller.router)
     app.include_router(user_controller.router)
+    app.include_router(book_controller.router)
+    
     return app
 
 def main():    
