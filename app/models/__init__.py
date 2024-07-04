@@ -1,2 +1,2 @@
-from .book import Book
+from .items import Items
 from .user import User
