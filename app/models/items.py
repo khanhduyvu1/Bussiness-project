@@ -26,5 +26,6 @@ class ItemsInfo(BaseModel):
     description: str
     price: float
     quantity: int
+    manufacture: str
 
 
