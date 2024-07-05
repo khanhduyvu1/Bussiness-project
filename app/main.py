@@ -7,13 +7,14 @@ import uvicorn
 from uvicorn.config import LOGGING_CONFIG
 
 
-from routers import user_controller, items_controller
+from routers import user_controller, items_controller, cart_controller
 
 
 def create_app(): 
     app = FastAPI()
     app.include_router(user_controller.router)
     app.include_router(items_controller.router)
+    app.include_router(cart_controller.router)
     
     return app
 
