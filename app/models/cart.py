@@ -1,9 +1,7 @@
 from pydantic import BaseModel
 from typing import List
-from sqlalchemy import Column, Integer, String, Boolean, ForeignKey, TIMESTAMP
+from sqlalchemy import Column, Integer, String, ForeignKey, TIMESTAMP
 from datetime import datetime
-from sqlalchemy.orm import relationship
-from sqlalchemy import event
 
 from models.model_base import Base
 

@@ -56,7 +56,7 @@ async def search_items(
     return results
 
 # update items
-@router.put("/Items/{item_id}", response_model=ItemsInfo)
+@router.put("/Items/update", response_model=ItemsInfo)
 async def update_item(
     item_id: int = Path(..., description="The ID of the item to update"),
     item_update: ItemsInfo = Depends(),
@@ -77,7 +77,7 @@ async def update_item(
     return item
 
 #delete items (should be in the last row)
-@router.delete("/Items/{item_id}", status_code=204)
+@router.delete("/Items/delete", status_code=204)
 async def delete_item(item_id: int, db: Session = Depends(get_db), user: dict = Depends(get_current_user)):
     # Retrieve the item from the database
     item = db.query(Items).filter(Items.id == item_id).first()
