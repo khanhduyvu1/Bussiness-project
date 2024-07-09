@@ -1,4 +1,4 @@
-from fastapi import APIRouter, HTTPException, Depends
+from fastapi import APIRouter, HTTPException, Depends, Path
 from datetime import datetime
 from sqlalchemy.orm import Session
 
@@ -39,13 +39,13 @@ async def add_item_to_cart(request: CartList):
         cart_products = []
         item_aggregate = {}
         total_cart_price = 0.0
-        cartId = request.cartId
+        # cartId = request.cartId
         
-        cart_ids = db.query(CartItem).filter(CartItem.cart_id==cartId).all()
-        if cart_ids:
-            for cart_id in cart_ids:
-                db.delete(cart_id)
-        db.commit()
+        # cart_ids = db.query(CartItem).filter(CartItem.cart_id==cartId).all()
+        # if cart_ids:
+        #     for cart_id in cart_ids:
+        #         db.delete(cart_id)
+        # db.commit()
 
     # Aggregate quantities for the same product ID
         for item in request.items_list:
@@ -110,3 +110,21 @@ async def get_carts(id: int, db: Session = Depends(get_db)):
         total=round(total_cart_price, 2)
     )
     return response
+
+@router.delete("/cart/remove/{cart_id}/{product_id}", status_code=204)
+def remove_item_from_cart(
+    cart_id: str = Path(..., description="The ID of the cart from which to remove an item"),
+    product_id: int = Path(..., description="The ID of the product to remove from the cart"),
+    db: Session = Depends(get_db)
+):
+    # Query to find the cart item
+    result = db.query(CartItem).filter(CartItem.cart_id == cart_id, 
+                                       CartItem.product_id == product_id).first()
+    
+    if not result:
+        raise HTTPException(status_code=404, detail="Item not found in the cart")
+
+    # If the item is found, delete it from the database
+    db.delete(result)
+    db.commit()
+    return {"message": "Item successfully removed from the cart"}

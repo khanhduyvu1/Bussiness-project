@@ -7,7 +7,7 @@ from models.model_base import Base
 class Items(Base):
     __tablename__ = "Items"
     
-    id = Column(Integer, primary_key=True, autoincrement=True)
+    id = Column(Integer, primary_key=True)
     name = Column(String, index=True)
     category = Column(String)
     description = Column(String)
