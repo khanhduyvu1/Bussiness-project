@@ -1,7 +1,7 @@
 from fastapi import APIRouter, Depends, HTTPException, Query, Path
 from schemas.database import SessionLocal
 from sqlalchemy.orm import Session
-from typing import Annotated, List
+from typing import List
 
 from models.items import Items, ItemsInfo
 from routers.auth import get_current_user

@@ -1,6 +1,6 @@
 from pydantic import BaseModel
 from typing import List
-from sqlalchemy import Column, Integer, String, ForeignKey, TIMESTAMP
+from sqlalchemy import Column, Integer, String, ForeignKey, TIMESTAMP, Float
 from datetime import datetime
 
 from models.model_base import Base
@@ -14,16 +14,19 @@ class CartItem(Base):
     product_name = Column(String, nullable=False)
     time = Column(TIMESTAMP, default=datetime.now)
     quantity = Column(Integer, default=0)
+    price = Column(Float, nullable = False)
     
 class ProductInfo(BaseModel):
     product_id: int
     product_name: str
     time: datetime
     quantity: int
+    product_price: float
     
 class CartInfo(BaseModel):
     cartId: int
     product: List[ProductInfo]
+    total: float
 
 class Cart(BaseModel):
     productId: int
