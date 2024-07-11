@@ -9,7 +9,7 @@ class CartItem(Base):
     __tablename__ = "Cart_Items"
 
     id = Column(Integer, primary_key=True, autoincrement=True)
-    cart_id = Column(Integer, nullable = False)
+    cart_id = Column(Integer, primary_key=True, nullable = False)
     product_id = Column(Integer, ForeignKey("Items.id"), nullable=False)
     product_name = Column(String, nullable=False)
     time = Column(TIMESTAMP, default=datetime.now)

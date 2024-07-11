@@ -58,7 +58,7 @@ async def search_items(
 # update items
 @router.put("/Items/update/{item_id}", response_model=ItemsInfo)
 async def update_item(
-    item_id: int = Path(..., description="The ID of the item to update"),
+    item_id: int,
     item_update: ItemsInfo = Depends(),
     db: Session = Depends(get_db),
     user: dict = Depends(get_current_user)
