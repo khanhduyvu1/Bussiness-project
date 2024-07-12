@@ -10,7 +10,7 @@ class CartItem(Base):
 
     id = Column(Integer, primary_key=True, autoincrement=True)
     cart_id = Column(Integer, primary_key=True, nullable = False)
-    product_id = Column(Integer, ForeignKey("Items.id"), nullable=False)
+    product_id = Column(Integer, nullable=False)
     product_name = Column(String, nullable=False)
     time = Column(TIMESTAMP, default=datetime.now)
     quantity = Column(Integer, default=0)

@@ -53,7 +53,7 @@ async def create_payment(cart_id: int, amount: float, payment_method: str, db: S
 
 @router.get("/payment/{payment_id}", response_model=PaymentInfo)
 async def get_payment(payment_id: int, db: Session = Depends(get_db)):
-    payment = db.query(Payment).filter(Payment.id == payment_id).first()
+    payment = db.query(Payment).filter(Payment.cart_id== payment_id).first()
     if not payment:
         raise HTTPException(status_code=404, detail="Payment not found")
     return payment

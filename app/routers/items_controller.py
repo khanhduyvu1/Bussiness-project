@@ -47,7 +47,7 @@ async def search_items(
     if category:
         query = query.filter(Items.category.ilike(f"%{category}%"))
     if manufacture:
-        query = query.filter(Items.category.ilike(f"%{manufacture}%"))
+        query = query.filter(Items.manufacture.ilike(f"%{manufacture}%"))
     
     results = query.all()
     if not results:

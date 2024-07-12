@@ -24,8 +24,8 @@ def report_summary(report_id: int = Path(..., description="report_id = cart_id")
     results = db.query(Payment).filter(Payment.cart_id == report_id).all()
     
     if not results:
-        raise HTTPException(status_code=404, detail="No items in cart to create order")
-    total_price = sum(item.price for item in results)
+        raise HTTPException(status_code=404, detail="No transaction available")
+    total_price = sum(item.amount for item in results)
     # Create and save a new order
     
     new_report = Report(report_id=report_id,

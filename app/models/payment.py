@@ -1,5 +1,5 @@
 from pydantic import BaseModel
-from sqlalchemy import Column, Integer, Float, String, ForeignKey, TIMESTAMP
+from sqlalchemy import Column, Integer, Float, String, TIMESTAMP
 from datetime import datetime
 from models.model_base import Base
 import enum
