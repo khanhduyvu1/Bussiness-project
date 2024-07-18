@@ -25,7 +25,7 @@ function Login() {
 
     return (
         <div className="login-container">
-            <h1>eCommercial</h1>
+            <h2>Login</h2>
             <form onSubmit={handleLogin} className="login-form">
                 <label htmlFor="username">Username:</label>
                 <input
@@ -48,7 +48,7 @@ function Login() {
                 <button type="submit">Sign In</button>
             </form>
             <p>
-                Don't have an account? <button onClick={() => navigate('/register')}>Register</button>
+                Don't have an account? <button onClick={() => navigate('/Register')}>Register</button>
             </p>
         </div>
     );

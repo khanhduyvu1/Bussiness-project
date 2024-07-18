@@ -25,7 +25,7 @@ function Register() {
             });
             console.log('Registration successful:', response.data);
             // Redirect to login page or anywhere else after registration
-            navigate('/login');
+            navigate('/Login');
         } catch (error) {
             console.error('Registration error:', error.response ? error.response.data : error);
             setError('Failed to register. Please try again.');
@@ -58,7 +58,7 @@ function Register() {
                 <button type="submit">Register</button>
             </form>
             <p>
-                Already have an account? <button onClick={() => navigate('/login')}>Login</button>
+                Already have an account? <button onClick={() => navigate('/Login')}>Login</button>
             </p>
         </div>
     );
