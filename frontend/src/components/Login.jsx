@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
-import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import '../styles/loginscreen.css';
+import { loginUser } from '../connection/Api';
 
 function Login() {
     const [username, setUsername] = useState('');
@@ -11,12 +11,10 @@ function Login() {
     const handleLogin = async (event) => {
         event.preventDefault();
         try {
-            const response = await axios.post('http://localhost:8000/login', {
-                username,
-                password
-            });
+            const response = await loginUser(username, password);
             console.log('Login successful:', response.data);
             // Navigate to another route on success or handle login logic
+            localStorage.setItem('token', response.access_token);
             navigate('/dashboard');
         } catch (error) {
             console.error('Login error:', error.response || error);

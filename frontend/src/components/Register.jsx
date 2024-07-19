@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
-import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import '../styles/loginscreen.css';
+import { registerUser } from '../connection/Api';
 
 function Register() {
     const [username, setUsername] = useState('');
@@ -19,10 +19,7 @@ function Register() {
         }
 
         try {
-            const response = await axios.post('http://localhost:8000/register', {
-                username,
-                password
-            });
+            const response = await registerUser(username, password);
             console.log('Registration successful:', response.data);
             // Redirect to login page or anywhere else after registration
             navigate('/Login');
