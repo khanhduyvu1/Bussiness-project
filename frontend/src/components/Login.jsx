@@ -6,6 +6,7 @@ import { loginUser } from '../connection/Api';
 function Login() {
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
+    const [error, setError] = useState('');
     const navigate = useNavigate();
 
     const handleLogin = async (event) => {
@@ -18,12 +19,16 @@ function Login() {
             navigate('/dashboard');
         } catch (error) {
             console.error('Login error:', error.response || error);
+            if (error.response && error.response.status === 401) {
+                setError('Wrong username or password');
+            }
         }
     };
 
     return (
         <div className="login-container">
             <h2>Login</h2>
+            {error && <p className="error">{error}</p>}
             <form onSubmit={handleLogin} className="login-form">
                 <label htmlFor="username">Username:</label>
                 <input

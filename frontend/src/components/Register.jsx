@@ -25,7 +25,11 @@ function Register() {
             navigate('/Login');
         } catch (error) {
             console.error('Registration error:', error.response ? error.response.data : error);
-            setError('Failed to register. Please try again.');
+            if (error.response && error.response.status === 406) {
+                setError('Username already exists. Please try another one.');
+            } else {
+                setError('Failed to register. Please try again.');
+            }
         }
     };
 
