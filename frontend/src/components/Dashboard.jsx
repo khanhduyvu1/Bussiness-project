@@ -1,11 +1,30 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { FiMenu } from 'react-icons/fi';
-import { BrowserRouter as Router, Route, Routes, Link } from 'react-router-dom';
-import "../styles/dashboard.css"
+// eslint-disable-next-line
+import { Link } from 'react-router-dom';
+
+import { fetchUserData } from '../connection/API';
+//import "../styles/dashboard.css"
+
 function Dashboard() {
     const [isOpen, setIsOpen] = useState(false);
+    const [username, setUsername] = useState('');
 
     const toggleMenu = () => setIsOpen(!isOpen);
+
+    useEffect(() => {
+        const getUserData = async () => {
+            try {
+                const userData = await fetchUserData();
+                setUsername(userData.User.username); // Adjust according to your response structure
+            } catch (error) {
+                console.error('Failed to fetch user:', error);
+                setUsername('Error'); // Fallback username
+            }
+        };
+
+        getUserData();
+    }, []);
 
     return (
         <div className="dashboard-container">
@@ -22,17 +41,7 @@ function Dashboard() {
             </div>
             <div className="content">
                 <div className="user-info">
-                    {/* Assume userName and other user details are available */}
-                    <p>Welcome, [UserName]</p>
-                </div>
-                <div className="page-content">
-                    {/* Router setup for page content */}
-                    <Routes>
-                        <Route path="/items" element={<div>Items Page</div>} />
-                        <Route path="/cart" element={<div>Cart Page</div>} />
-                        <Route path="/payment" element={<div>Payment Page</div>} />
-                        <Route path="/report" element={<div>Report Page</div>} />
-                    </Routes>
+                    <p>Welcome,{username}</p>
                 </div>
             </div>
         </div>

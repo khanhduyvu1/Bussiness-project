@@ -22,6 +22,7 @@ class Items(Base):
 
 
 class ItemsInfo(BaseModel):
+    id: int
     name: str
     category: str
     description: str

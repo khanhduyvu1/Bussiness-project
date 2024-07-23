@@ -26,9 +26,9 @@ async def add_items(items: ItemsInfo, db: Session = Depends(get_db), user: dict 
     return db_items
 
 # item info
-@router.get("/Items", response_model=ItemsInfo)
-async def read_items(items_id: int, db: Session = Depends(get_db)):
-    results = db.query(Items).filter(Items.id == items_id).first()
+@router.get("/Items", response_model=List[ItemsInfo])
+async def read_items(db: Session = Depends(get_db)):
+    results = db.query(Items).all()
     if not results:
         raise HTTPException(status_code=404, detail="Item not found")
     return results

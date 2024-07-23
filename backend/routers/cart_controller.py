@@ -39,13 +39,6 @@ async def add_item_to_cart(request: CartList):
         cart_products = []
         item_aggregate = {}
         total_cart_price = 0.0
-        # cartId = request.cartId
-        
-        # cart_ids = db.query(CartItem).filter(CartItem.cart_id==cartId).all()
-        # if cart_ids:
-        #     for cart_id in cart_ids:
-        #         db.delete(cart_id)
-        # db.commit()
 
     # Aggregate quantities for the same product ID
         for item in request.items_list:
