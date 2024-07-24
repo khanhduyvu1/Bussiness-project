@@ -10,7 +10,7 @@ This section provides instructions on how to get a copy of the project up and ru
 ## Installation process
 1. Clone the repository:
    ```bash
-   git clone https://yourrepositorylink.git
+   git clone https://github.com/khanhduyvu1/Bussiness-project.git
    ```
 2. Navigate to the project directory:
    ```bash
@@ -32,9 +32,6 @@ This section provides instructions on how to get a copy of the project up and ru
   npm install
   ```
 
-## Latest releases
-You can view the latest release of the project [here](https://yourrepositorylink/releases).
-
 ## API references
 Refer to the FastAPI documentation available at `http://localhost:8000/docs` after your server is running to see all available endpoints and their specifications.
 
@@ -53,7 +50,7 @@ To build and run the application:
 
 2. Start the FastAPI backend:
    ```bash
-   uvicorn app.main:app --reload
+   python main.py
    ```
 
 3. Navigate to the frontend directory and start the React application:
@@ -61,10 +58,6 @@ To build and run the application:
    npm start
    ```
 
-4. Run tests (make sure to write tests in the `tests` directory):
-   ```bash
-   pytest
-   ```
 
 # Contribute
 We welcome contributions from the community! If you'd like to contribute to this project, please fork the repository and submit a pull request.
@@ -75,7 +68,6 @@ We welcome contributions from the community! If you'd like to contribute to this
 4. Push to the Branch (`git push origin feature/AmazingFeature`)
 5. Open a Pull Request
 
-For more detailed information on contributing, please refer to the [project documentation](https://yourrepositorylink/contributing).
 
 # More Resources
 If you want to learn more about creating good README files, refer to the following [guidelines](https://docs.microsoft.com/en-us/azure/devops/repos/git/create-a-readme?view=azure-devops).
