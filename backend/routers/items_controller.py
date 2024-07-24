@@ -19,6 +19,9 @@ def get_db():
 # input item
 @router.post("/Items", response_model=ItemsInfo)
 async def add_items(items: ItemsInfo, db: Session = Depends(get_db), user: dict = Depends(get_current_user)):
+    existing_item = db.query(Items).filter(Items.id == items.id).first()
+    if existing_item:
+        raise HTTPException(status_code=400, detail="Item ID is existed")
     db_items = Items(**items.model_dump())
     db.add(db_items)
     db.commit()
@@ -29,8 +32,6 @@ async def add_items(items: ItemsInfo, db: Session = Depends(get_db), user: dict 
 @router.get("/Items", response_model=List[ItemsInfo])
 async def read_items(db: Session = Depends(get_db)):
     results = db.query(Items).all()
-    if not results:
-        raise HTTPException(status_code=404, detail="Item not found")
     return results
 
 #search item
