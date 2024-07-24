@@ -17,7 +17,7 @@ function ItemTable() {
     }, []);
 
     const handleAddNewItem = () => {
-        navigate('/Items/add_new_item');  // Navigate to add new item form
+        navigate('/items/add_new_item');  // Navigate to add new item form
     };
 
     return (

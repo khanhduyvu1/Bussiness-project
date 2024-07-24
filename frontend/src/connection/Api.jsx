@@ -58,24 +58,26 @@ export const fetchUserData = async () => {
 export const fetchItemsData = async () => {
     return fetch(`${API_URL}/Items`)
       .then(response => {
-        if (!response.ok) {
-          throw new Error('Network response was not ok');
-        }
         return response.json();
       })
-      .catch(error => {
-        console.error('There has been a problem with your fetch operation:', error);
-      })  
+};
+
+export const createItem = (itemDetails) => {
+    try {
+        const token = localStorage.getItem('token');  // Retrieve the token
+        return fetch(`${API_URL}/Items`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${token}`  
+            },
+            body: JSON.stringify(itemDetails)
+    });  
+    } catch(error) {
+        throw error;
     }
-// export const createItem = (itemDetails) => {
-//     return fetch(`${API_URL}/Items`, {
-//         method: 'POST',
-//         headers: {
-//             'Content-Type': 'application/json'
-//         },
-//         body: JSON.stringify(itemDetails)
-//     });
-// };
+    
+};
 
 // export const updateItem = (itemId, itemDetails) => {
 //     return fetch(`${API_URL}/Items/update/${itemId}`, {
