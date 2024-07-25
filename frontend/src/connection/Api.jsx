@@ -79,18 +79,36 @@ export const createItem = (itemDetails) => {
     
 };
 
-// export const updateItem = (itemId, itemDetails) => {
-//     return fetch(`${API_URL}/Items/update/${itemId}`, {
-//         method: 'PUT',
-//         headers: {
-//             'Content-Type': 'application/json'
-//         },
-//         body: JSON.stringify(itemDetails)
-//     });
-// };
+export const updateItem = (itemDetails) => {
+    try {
+        const token = localStorage.getItem('token');
+        return fetch(`${API_URL}/Items/update`, {
+        method: 'PUT',
+        headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${token}`
+        },
+        body: JSON.stringify(itemDetails) 
+    }); 
+    }catch(error) {
+        throw error;
+    } 
+    
+};
 
-// export const deleteItem = (itemId) => {
-//     return fetch(`${API_URL}/Items/delete/${itemId}`, {
-//         method: 'DELETE'
-//     });
-// };
+export const deleteItem = async (itemId) => {
+    try {
+        const token = localStorage.getItem('token');
+        const response = await fetch(`${API_URL}/Items/delete?item_id=${itemId}`, {
+            method: 'DELETE',
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${token}`
+            }
+        });
+        return response;
+    } catch (error) {
+        console.error('Failed to delete the item:', error);
+        return null; 
+    }
+};

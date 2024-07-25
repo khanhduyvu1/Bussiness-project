@@ -57,14 +57,13 @@ async def search_items(
     return results
 
 # update items
-@router.put("/Items/update/{item_id}", response_model=ItemsInfo)
+@router.put("/Items/update", response_model=ItemsInfo)
 async def update_item(
-    item_id: int,
     item_update: ItemsInfo = Depends(),
     db: Session = Depends(get_db),
     user: dict = Depends(get_current_user)
 ):
-    item = db.query(Items).filter(Items.id == item_id).first()
+    item = db.query(Items).filter(Items.id == item_update.id).first()
     
     if not item:
         raise HTTPException(status_code=404, detail="Item not found")

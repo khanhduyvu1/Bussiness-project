@@ -1,0 +1,10 @@
+.table {
+    width: 100%;
+    border-collapse: collapse; /* Ensures that the border spacing is collapsed into a single border */
+}
+
+.th, .td {
+    border: 1px solid black; /* Apply a solid border to each cell */
+    padding: 8px;
+    text-align: left;
+}

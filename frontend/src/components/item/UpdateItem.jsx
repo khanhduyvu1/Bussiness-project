@@ -1,10 +1,9 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
-import { createItem } from '../../connection/API';
+import { updateItem } from '../../connection/API';
 
-
-function AddItemForm() {
+function UpdateItemForm() {
     const [itemDetails, setItemDetails] = useState({
         id: 0,
         name: '',
@@ -15,23 +14,24 @@ function AddItemForm() {
         manufacture: ''
     });
     const navigate = useNavigate();
-
+    console.log(itemDetails);
     const handleChange = (event) => {
-        setItemDetails({...itemDetails, [event.target.name]: event.target.value});
+        setItemDetails({...itemDetails, [event.target.name]: event.target.value})
     };
 
     const handleSubmit = async (event) => {
         event.preventDefault();
-        const response = await createItem(itemDetails);
+        const response = await updateItem(itemDetails);
+        
         if (response.ok) {
-            alert('Item added successfully!');
+            alert('Item updated successfully!');
             // Reset form to initial state
             setItemDetails({ id: 0 , name: '', category: '', description: '', price: 0, quantity: 0, manufacture: '' });
             navigate('/items')
         } else {
             const errorData = await response.json(); // Assuming the server sends a JSON response with error details
-            if (response.status === 400) {
-                alert(errorData.detail || 'Item ID is existed.');
+            if (response.status === 404) {
+                alert(errorData.detail || 'Item not found.');
             }
         };
     }
@@ -73,9 +73,9 @@ function AddItemForm() {
                 <input type="text" name="manufacture" value={itemDetails.manufacture} onChange={handleChange} />
             </label>
             <br />
-            <button type="submit">Add Item</button>
+            <button type="submit">Update</button>
         </form>
     );
 }
 
-export default AddItemForm;
+export default UpdateItemForm;

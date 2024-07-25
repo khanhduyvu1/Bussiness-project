@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 
-import { fetchItemsData } from '../../connection/API';
+import { fetchItemsData, deleteItem } from '../../connection/API';
+import './Item.css';
 
 
 function ItemTable() {
@@ -20,31 +21,53 @@ function ItemTable() {
         navigate('/items/add_new_item');  // Navigate to add new item form
     };
 
+    const handleUpdateItem = (item, index) => {
+        console.log('Updating item at index:', index, 'Item:', item);
+        navigate('/items/update_item');
+    }
+
+    const handleDeleteItem = async (itemId) => {
+        if (window.confirm("Are you sure you want to delete this item?")) {
+            const response = await deleteItem(itemId);
+            if (response.ok) {
+                alert('Item deleted successfully!');
+                setItems(items.filter(item => item.id !== itemId));  // Update the state to remove the deleted item
+            } else {
+                alert('Failed to delete the item. Please try again.');
+            }
+        }
+    };
+
     return (
         <>
             <button onClick={handleAddNewItem}>Create New Item</button>
-            <table>
+            <table className="table">
                 <thead>
                     <tr>
-                        <th>ID</th>
-                        <th>Name</th>
-                        <th>Category</th>
-                        <th>Description</th>
-                        <th>Price</th>
-                        <th>Quantity</th>
-                        <th>Manufacture</th>
+                        <th className="th">ID</th>
+                        <th className="th">Name</th>
+                        <th className="th">Category</th>
+                        <th className="th">Description</th>
+                        <th className="th">Price</th>
+                        <th className="th">Quantity</th>
+                        <th className="th">Manufacture</th>
+                        <th className="th">Actions</th>
                     </tr>
                 </thead>
                 <tbody>
                     {Array.isArray(items) && items.map(item => (
                         <tr key={item.id}>
-                            <td>{item.id}</td>
-                            <td>{item.name}</td>
-                            <td>{item.category}</td>
-                            <td>{item.description}</td>
-                            <td>{item.price}</td>
-                            <td>{item.quantity}</td>
-                            <td>{item.manufacture}</td>
+                            <td className="td">{item.id}</td>
+                            <td className="td">{item.name}</td>
+                            <td className="td">{item.category}</td>
+                            <td className="td">{item.description}</td>
+                            <td className="td">{item.price}</td>
+                            <td className="td">{item.quantity}</td>
+                            <td className="td">{item.manufacture}</td>
+                            <td className="td">
+                                <button onClick={() => handleUpdateItem(item)}>Update</button>
+                                <button onClick={() => handleDeleteItem(item.id)}>Delete</button>
+                            </td>
                         </tr>
                     ))}
                 </tbody>
