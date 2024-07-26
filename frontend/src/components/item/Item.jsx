@@ -21,8 +21,7 @@ function ItemTable() {
         navigate('/items/add_new_item');  // Navigate to add new item form
     };
 
-    const handleUpdateItem = (item, index) => {
-        console.log('Updating item at index:', index, 'Item:', item);
+    const handleUpdateItem = () => {
         navigate('/items/update_item');
     }
 

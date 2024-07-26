@@ -14,7 +14,6 @@ function UpdateItemForm() {
         manufacture: ''
     });
     const navigate = useNavigate();
-    console.log(itemDetails);
     const handleChange = (event) => {
         setItemDetails({...itemDetails, [event.target.name]: event.target.value})
     };
@@ -22,14 +21,12 @@ function UpdateItemForm() {
     const handleSubmit = async (event) => {
         event.preventDefault();
         const response = await updateItem(itemDetails);
-        
         if (response.ok) {
             alert('Item updated successfully!');
-            // Reset form to initial state
             setItemDetails({ id: 0 , name: '', category: '', description: '', price: 0, quantity: 0, manufacture: '' });
             navigate('/items')
         } else {
-            const errorData = await response.json(); // Assuming the server sends a JSON response with error details
+            const errorData = await response.json();
             if (response.status === 404) {
                 alert(errorData.detail || 'Item not found.');
             }

@@ -1,5 +1,6 @@
 import axios from 'axios';
 import qs from 'qs';
+import { constructQueryParams } from './Utils';
 
 const API_URL = process.env.REACT_APP_API_URL; // Adjust the port if your FastAPI runs on a different one
 
@@ -79,16 +80,17 @@ export const createItem = (itemDetails) => {
     
 };
 
-export const updateItem = (itemDetails) => {
+export const updateItem = (updatedData) => {
     try {
         const token = localStorage.getItem('token');
-        return fetch(`${API_URL}/Items/update`, {
+        const queryParams = constructQueryParams(updatedData);
+
+        return fetch(`${API_URL}/Items/update?${queryParams}`, {
         method: 'PUT',
         headers: {
             'Content-Type': 'application/json',
             'Authorization': `Bearer ${token}`
         },
-        body: JSON.stringify(itemDetails) 
     }); 
     }catch(error) {
         throw error;
