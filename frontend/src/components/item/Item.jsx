@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 
-import { fetchItemsData, deleteItem } from '../../connection/API';
+import { fetchItemsData, deleteItem, logout } from '../../connection/API';
 import './Item.css';
 
 
@@ -17,8 +17,12 @@ function ItemTable() {
         fetchItems();
     }, []);
 
+    const handleSearchItem = () => {
+        navigate('/items/search_item');
+    }
+
     const handleAddNewItem = () => {
-        navigate('/items/add_new_item');  // Navigate to add new item form
+        navigate('/items/add_new_item');  
     };
 
     const handleUpdateItem = () => {
@@ -39,7 +43,9 @@ function ItemTable() {
 
     return (
         <>
+            <button onClick={logout}>Log Out</button>
             <button onClick={handleAddNewItem}>Create New Item</button>
+            <button onClick={handleSearchItem}>Search</button>
             <table className="table">
                 <thead>
                     <tr>

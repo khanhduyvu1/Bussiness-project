@@ -3,7 +3,7 @@ import { FiMenu } from 'react-icons/fi';
 // eslint-disable-next-line
 import { Link } from 'react-router-dom';
 
-import { fetchUserData } from '../connection/API';
+import { fetchUserData, logout } from '../connection/API';
 //import "../styles/dashboard.css"
 
 function Dashboard() {
@@ -27,6 +27,7 @@ function Dashboard() {
     }, []);
 
     return (
+    <>    
         <div className="dashboard-container">
             <div className="menu-icon" onClick={toggleMenu}>
                 <FiMenu size={30} />
@@ -45,6 +46,8 @@ function Dashboard() {
                 </div>
             </div>
         </div>
+        <button onClick={logout}>Log Out</button>
+    </>
     );
 }
 

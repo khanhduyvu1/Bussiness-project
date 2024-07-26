@@ -1,6 +1,6 @@
 import axios from 'axios';
 import qs from 'qs';
-import { constructQueryParams } from './Utils';
+import { constructQueryParams, constructSearchParams } from './Utils';
 
 const API_URL = process.env.REACT_APP_API_URL; // Adjust the port if your FastAPI runs on a different one
 
@@ -41,6 +41,12 @@ export const loginUser = async (username, password) => {
     }
 };
 
+export const logout = () => {
+    localStorage.removeItem('token');
+    window.location.href = '/login'; // Redirect to login page
+};
+
+
 export const fetchUserData = async () => {
     try {
         const config = {
@@ -80,21 +86,42 @@ export const createItem = (itemDetails) => {
     
 };
 
-export const updateItem = (updatedData) => {
+export const searchItem = async (searchParams) => {
     try {
         const token = localStorage.getItem('token');
-        const queryParams = constructQueryParams(updatedData);
+        const queryParams = constructSearchParams(searchParams);
+        const response = await fetch(`${API_URL}/Items/search?${queryParams}`, {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${token}`
+            },
+        });
 
-        return fetch(`${API_URL}/Items/update?${queryParams}`, {
+        if (!response.ok) {
+            throw new Error('No items found matching the criteria');
+        }
+
+        const data = await response.json();
+        console.log('API response data:', data); // Add logging here
+        return Array.isArray(data) ? data : [];
+    } catch (error) {
+        console.error('API error:', error); // Add logging here
+        throw error;
+    }
+};
+
+export const updateItem = (updatedData) => {
+    const token = localStorage.getItem('token');
+    const queryParams = constructQueryParams(updatedData);
+
+    return fetch(`${API_URL}/Items/update?${queryParams}`, {
         method: 'PUT',
         headers: {
             'Content-Type': 'application/json',
             'Authorization': `Bearer ${token}`
         },
     }); 
-    }catch(error) {
-        throw error;
-    } 
     
 };
 

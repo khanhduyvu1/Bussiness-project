@@ -9,3 +9,7 @@ export const constructQueryParams = (updatedData) => {
         manufacture: updatedData.manufacture,
     }).toString();
 };
+
+export const constructSearchParams = (params) => {
+    return new URLSearchParams(params).toString();
+};

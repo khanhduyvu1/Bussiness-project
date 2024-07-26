@@ -24,14 +24,14 @@ function UpdateItemForm() {
         if (response.ok) {
             alert('Item updated successfully!');
             setItemDetails({ id: 0 , name: '', category: '', description: '', price: 0, quantity: 0, manufacture: '' });
-            navigate('/items')
+            navigate('/items');
         } else {
             const errorData = await response.json();
             if (response.status === 404) {
                 alert(errorData.detail || 'Item not found.');
             }
         };
-    }
+    };
 
     return (
         <form onSubmit={handleSubmit}>
